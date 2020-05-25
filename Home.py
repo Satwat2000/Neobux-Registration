@@ -49,6 +49,7 @@ class HomePage ( QWidget ):
         self.btn.setFixedSize(250,50)
         
 
+# Class To give functionaluities to the buttons
 class contrl():
     def __init__(self,view):
         self.Do = process.func()

@@ -13,8 +13,8 @@ class func():
         # option = webd.ChromeOptions()
         # option.add_argument("--headless")
         self.browser = webdriver.Chrome(executable_path=r'C:\Chrome\chromedriver.exe')
-        self.browser.get("https://www.neobux.com/m/r/?vl=2ADF6C09815021CD")
-        return (self.get_capta())
+        self.browser.get("https://www.neobux.com/m/r/?vl=A3CF35334710E577")
+        # return (self.get_capta())
         
     def get_capta(self):
         images = self.browser.find_elements_by_tag_name('img')   #-----------> Find img tags form the source
@@ -42,3 +42,10 @@ class func():
         Birth_year.send_keys(data["year"])
         capta.send_keys(data["code"])
         cont.click()
+    
+    # def check_erros(self, value, tag=''):
+    #     if tag == user:
+    #         if len(value) or (' ' in value) < 4:
+                
+    
+func.open_url(func)

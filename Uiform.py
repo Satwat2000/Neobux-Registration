@@ -173,7 +173,7 @@ class Ui_Dialog(object):
         self.capta_err.setObjectName("capta_err")
 
         # error..fields....!!!!
-        user_err, pass_err, email_err, capta_err, btncheck_err = (True, True, False, True, False)
+        user_err, pass_err, email_err, capta_err, btncheck_err = (False, False, False, False, False)
         self.user_err.setVisible(user_err)
         self.pass_err.setVisible(pass_err)
         self.email_err.setVisible(email_err)
