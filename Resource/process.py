@@ -17,8 +17,11 @@ class func():
         # option = webd.ChromeOptions()
         # option.add_argument("--headless")
         try:
-            self.browser = webdriver.Chrome(executable_path=r'C:\Chrome\chromedriver.exe')
-            self.browser.get("https://www.neobux.com/m/r/?vl=A3CF35334710E577")
+            options = webdriver.ChromeOptions()
+            options.headless = True
+            options.add_argument('--headless')
+            self.browser = webdriver.Chrome(executable_path=r'C:\Chrome\chromedriver.exe', chrome_options=options)
+            self.browser.get("https://www.neobux.com/m/r/?vl=36AD8721EABFD859")
             return True
         except Exception as e:
             print(e)
@@ -30,16 +33,17 @@ class func():
         img = images[0].get_attribute('src')        #---------------> Find source of the found img tag
         self.data = request.urlretrieve(img)
         return self.data[0]
+    
+    def getSnap(self,name):
+        path = 'Resource/review/'+ name +'.png'
+        # #self.browser.get_screenshot_as_file(path)
 
-    def getSnap(self, name):
-        path = 'review'+name
-        self.browser.get_screenshot_as_file(path)
-        
     def pg1_err(self):
         print("into for check")
         rdata={'pass':True,     # Limiter
                 'usr':False,    # Username error
-                'capt':False}   # Capta error
+                'capt':False,
+                'mail':False}   # Capta error
         try:
             element = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'ul')))
             print("-----Error found-----")
@@ -52,6 +56,8 @@ class func():
                     rdata['usr']= True
                 if 'image' in e:
                     rdata['capt'] = True 
+                if 'email' in e:
+                    rdata['mail'] = True
             print("returning data")
             return rdata    
         except TimeoutException:
@@ -60,7 +66,6 @@ class func():
            
     
     def fill_info(self):
-        ksec1 = Keys.chord(Keys.CONTROL,'')
         user = self.browser.find_element_by_id("nomedeutilizador")
         passw = self.browser.find_element_by_id("palavrapasse")
         repass = self.browser.find_element_by_id("palavrapasseconfirmacao")
@@ -73,17 +78,65 @@ class func():
         tick1.click()
         tick2.click()
         data = Db.get_val()
-        user.send_keys(data["user"])
-        passw.send_keys(data["pswd"])
-        repass.send_keys(data["pswd"])
-        email.send_keys(data["mail"])
-        Birth_year.send_keys(data["year"])
-        capta.send_keys(data["code"])
+        user.send_keys(Keys.CONTROL+ 'a'+ Keys.DELETE)
+        user.send_keys(data["page1"]["user"])
+        passw.send_keys(Keys.CONTROL+ 'a'+ Keys.DELETE)
+        passw.send_keys(data["page1"]["pswd"])
+        repass.send_keys(Keys.CONTROL+ 'a'+ Keys.DELETE)
+        repass.send_keys(data["page1"]["pswd"])
+        email.send_keys(Keys.CONTROL+ 'a'+ Keys.DELETE)
+        email.send_keys(data["page1"]["mail"])
+        Birth_year.send_keys(Keys.CONTROL+ 'a'+ Keys.DELETE)
+        Birth_year.send_keys(data["page1"]["year"])
+        capta.send_keys(data["page1"]["code"])
         cont.click()
         return (self.pg1_err())
-
-
-
+    
+    def pg2_err(self):
+        print("into for check")
+        rdata={'pass':True,     # Limiter
+                'OnlyV':False,    # Username error
+                'OnlyC':False,
+                'Both':False}   # Capta error
+        try:
+            err = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'ul')))
+            print("-----Error found-----")
+            rdata['pass'] = False
+            errs = err.get_attribute('textContent').split('.')
+            print("Errors Identified")
+            print(errs)
+            for e in errs:
+                if 'image' in e:
+                    rdata['OnlyC'] = True 
+                    print("img")
+                if 'email' in e:
+                    rdata['OnlyV']= True
+                    print("code")
+                if rdata['OnlyC'] and rdata['OnlyV']:
+                    rdata['Both'] = True
+                    rdata['OnlyC'] = False
+                    rdata['OnlyV'] = False
+                    print("both",rdata['OnlyC'],rdata['OnlyV'])
+            
+            print("returning data")
+            return rdata    
+        except TimeoutException:
+            print ("No Errors found in 1st step")
+            return rdata
+        
+    def get_email(self):
+        data = Db.get_val()
+        return (data['page1']['mail'])
+        
+    def fill_page2(self):
+        data = Db.get_val()
+        Vcode = self.browser.find_element_by_id('val_em_1')
+        Vcap = self.browser.find_element_by_id('codigo')
+        btn = self.browser.find_element_by_id('botao_registo')
+        Vcode.send_keys(data['page2']['Vcode'])
+        Vcap.send_keys(data['page2']['Vcap'])
+        btn.click()
+        return self.pg2_err()
     
 # func.open_url(func)
 

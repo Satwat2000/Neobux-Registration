@@ -1,6 +1,6 @@
 import json
 
-def update(value):
+def update(Class,value):
     jsonFile = open("Data.json", "r") # Open the JSON file for reading
     data = json.load(jsonFile) # Read the JSON into the buffer
     jsonFile.close() # Close the JSON file
@@ -8,7 +8,7 @@ def update(value):
     ## Working with buffered content
     # tmp = data["location"] 
     for key, value in value.items():
-        data[key] = value
+        data[Class][key] = value
 
     ## Save our changes to JSON file
     jsonFile = open("Data.json", "w+")
@@ -16,7 +16,7 @@ def update(value):
     jsonFile.close()
 
 def get_val():
-    jsonFile = open("replayScript.json", "r") # Open the JSON file for reading
+    jsonFile = open("Data.json", "r") # Open the JSON file for reading
     data = json.load(jsonFile) # Read the JSON into the buffer
     jsonFile.close() # Close the JSON file
     return data

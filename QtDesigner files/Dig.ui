@@ -26,7 +26,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>img/Neo.png</pixmap>
+    <pixmap>C:/Users/Satwat/.designer/backup/img/Neo.png</pixmap>
    </property>
   </widget>
   <widget class="QTextEdit" name="email">
@@ -103,7 +103,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>img/Neo_logo.png</pixmap>
+    <pixmap>C:/Users/Satwat/.designer/backup/img/Neo_logo.png</pixmap>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
@@ -119,7 +119,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>img/capta.png</pixmap>
+    <pixmap>C:/Users/Satwat/.designer/backup/img/capta.png</pixmap>
    </property>
   </widget>
   <widget class="QLabel" name="info2">
@@ -898,7 +898,23 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>img/warning totle.png</pixmap>
+    <pixmap>C:/Users/Satwat/.designer/backup/img/warning totle.png</pixmap>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>370</y>
+     <width>501</width>
+     <height>241</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>../img/billi.png</pixmap>
    </property>
   </widget>
  </widget>

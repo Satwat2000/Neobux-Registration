@@ -6,12 +6,15 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-import Db
+import Db, datetime, re
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+now = datetime.datetime.now()       # year
+now = now.year
 
 class Ui_Dialog(object):
-    def setupUi(self, Dialog, path=""):
+    def __init__(self):
+        self.compFillup = False
+    def setupUi(self, Dialog, browserob, path=""):
         Dialog.setObjectName("Dialog")
         Dialog.resize(516, 576)
         self.label = QtWidgets.QLabel(Dialog)
@@ -64,7 +67,7 @@ class Ui_Dialog(object):
         self.enter_cap.setGeometry(QtCore.QRect(240, 410, 111, 31))
         self.enter_cap.setObjectName("enter_cap")
         self.dob = QtWidgets.QTextEdit(Dialog)
-        self.dob.setGeometry(QtCore.QRect(240, 360, 251, 31))
+        self.dob.setGeometry(QtCore.QRect(240, 360, 111, 31))
         self.dob.setObjectName("dob")
         self.DOB = QtWidgets.QLabel(Dialog)
         self.DOB.setGeometry(QtCore.QRect(130, 360, 91, 31))
@@ -171,28 +174,117 @@ class Ui_Dialog(object):
         self.capta_err.setText("")
         self.capta_err.setPixmap(QtGui.QPixmap("img/capta_err.png"))
         self.capta_err.setObjectName("capta_err")
-
+        self.label_3 = QtWidgets.QLabel(Dialog)
+        self.label_3.setGeometry(QtCore.QRect(10, 290, 501, 241))
+        self.label_3.setText("")
+        self.label_3.setPixmap(QtGui.QPixmap("img/billi.png"))
+        self.label_3.setObjectName("label_3")
+        self.label_3.setVisible(False)
+        self.check_err = QtWidgets.QLabel(Dialog)
+        self.check_err.setGeometry(QtCore.QRect(250, 510, 231, 21))
+        self.check_err.setText("")
+        self.check_err.setPixmap(QtGui.QPixmap("img/check_sub.png"))
+        self.check_err.setObjectName("check_err")
+        self.doberr = QtWidgets.QLabel(Dialog)
+        self.doberr.setGeometry(QtCore.QRect(360, 365, 30, 25))
+        self.doberr.setText("")
+        self.doberr.setPixmap(QtGui.QPixmap("img/doberr.png"))
+        self.doberr.setObjectName("doberr")
+        self.doberr.setVisible(False)
+        # Password length Constrain
+        def checkpass():
+            s = self.password.toPlainText()
+            n = len(s)
+            print(s,"-->",n)
+            if n >= 8:
+                self.pass_err.setVisible(False)
+            else:
+                self.pass_err.setVisible(True)
+        # Email Constrain
+        def checkmail():
+            regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
+            if not re.search(regex,self.email.toPlainText()):
+                print("email flag")
+                self.email_err.setVisible(True)
+            else:
+                self.email_err.setVisible(False)
+        # Checkbox Constrain
+        def checkbtbn():
+            if self.checkBox.isChecked():
+                self.btncheck_err.setVisible(False)
+                
+       
+        # DOB Constrain
+        def doberr():
+            string = self.dob.toPlainText()
+            if len(string)>4:
+                print("DOB flag")
+                self.errdob = True
+                self.doberr.setVisible(True)
+        
+            else:
+                dif = now - int(string)
+                if dif < 10:
+                    self.errdob = True
+                    self.doberr.setVisible(True)
+                else:
+                    self.errdob = False
+                    self.doberr.setVisible(False)
+        
+        # Username Constrain
+        def checkuser():
+            string = self.username.toPlainText()
+            if len(string) > 14:
+                print(string[:-1])
+                self.username.setText(string[:-1])
+                     
         # error..fields....!!!!
-        user_err, pass_err, email_err, capta_err, btncheck_err = (False, False, False, False, False)
+        user_err, pass_err, email_err, capta_err, btncheck_err, check_err = (False, False, False, False, False, False)
         self.user_err.setVisible(user_err)
+        self.username.textChanged.connect(checkuser)
         self.pass_err.setVisible(pass_err)
+        self.password.textChanged.connect(checkpass)
         self.email_err.setVisible(email_err)
+        self.email.textChanged.connect(checkmail)
         self.capta_err.setVisible(capta_err)
         self.btncheck_err.setVisible(btncheck_err)
-        
+        self.check_err.setVisible(check_err)
+        self.checkBox.clicked.connect(checkbtbn)
+        self.dob.textChanged.connect(doberr)
+        print ()
+
+
         # add actions...
-        self.press = False
         def clickyes():
-            values = {
-                  "user": self.username.toPlainText(),
-                  "pswd": self.password.toPlainText(),
-                  "mail": self.email.toPlainText(),
-                  "year": self.dob.toPlainText(),
-                  "code": self.enter_cap.toPlainText()
-            }
-            Db.update(values)
-            Dialog.close()
-            
+            if not self.pass_err.isVisible() and not self.email_err.isVisible() and not self.errdob :
+                if self.checkBox.isChecked():
+                    # All constrains checked to proceed
+                    print("sleep over")
+                    values = {
+                        "user": self.username.toPlainText(),
+                        "pswd": self.password.toPlainText(),
+                        "mail": self.email.toPlainText(),
+                        "year": self.dob.toPlainText(),
+                        "code": self.enter_cap.toPlainText()
+                    }
+                    Db.update('page1',values)
+                    #fill info in browswe
+                    rdata = browserob.fill_info()
+                    #chek to proceed
+                    if rdata['pass']:
+                        browserob.getSnap('Form Filled')
+                        Dialog.close()
+                        self.compFillup = True
+                    print("Rdata returned")
+                    self.user_err.setVisible(rdata['usr'])
+                    self.capta_err.setVisible(rdata['capt'])
+                    self.email_err.setVisible(rdata['mail'])
+                    self.label_2.setPixmap(QtGui.QPixmap(browserob.get_capta()))
+                else:
+                    self.btncheck_err.setVisible(True)
+            else:
+                self.check_err.setVisible(True)
+                self.btncheck_err.setVisible(False)
     
         self.pushButton.clicked.connect(clickyes)
         

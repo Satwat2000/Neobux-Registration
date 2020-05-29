@@ -1,9 +1,8 @@
 import sys
-import Form, Home
+# insert at 1, 0 is the script path (or '' in REPL)
+sys.path.insert(1, 'Resource/')
+import Home
 from PyQt5.QtWidgets import QApplication
-
-
-
 
 
 if __name__ == '__main__':
