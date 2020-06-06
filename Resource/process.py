@@ -20,8 +20,8 @@ class func():
             options = webdriver.ChromeOptions()
             options.headless = True
             options.add_argument('--headless')
-            self.browser = webdriver.Chrome(executable_path=r'C:\Chrome\chromedriver.exe', chrome_options=options)
-            self.browser.get("https://www.neobux.com/m/r/?vl=36AD8721EABFD859")
+            self.browser = webdriver.Chrome(executable_path=r'Chrome\chromedriver.exe', chrome_options=options)
+            self.browser.get("https://www.neobux.com/m/r/?vl=17FA6BC9D703CE65")
             return True
         except Exception as e:
             print(e)
@@ -156,4 +156,5 @@ class support():
             print("Chrome.exe not found")
             return None
         return version
+
 

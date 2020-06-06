@@ -11,6 +11,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from FinalPage import Ui_Dialog as finalui
 import Db
 
+   
+
 class Ui_Dialog(object):
     
     def setVesibality(self,vesibal):
@@ -26,7 +28,7 @@ class Ui_Dialog(object):
             self.capta,
             self.label_8,
             self.pushButton,
-            self.line
+            self.line,
             ]
         for l in labels:
             l.setVisible(vesibal)
@@ -131,6 +133,12 @@ class Ui_Dialog(object):
         self.only_code.setText("")
         self.only_code.setPixmap(QtGui.QPixmap("img/Vcodeerr.png"))
         self.only_code.setVisible(False)
+        # Make Erro msg for valid code
+        self.Vocde = QtWidgets.QLabel(Dialog)
+        self.Vocde.setGeometry(QtCore.QRect(310, 352, 200, 30))
+        self.Vocde.setText("")
+        self.Vocde.setPixmap(QtGui.QPixmap("img/valicode.png"))
+        self.Vocde.setVisible(False)
         # self.only_code.setObjectName("only_code")
         self.both = QtWidgets.QLabel(Dialog)
         self.both.setGeometry(QtCore.QRect(270, 190, 481, 81))
@@ -146,22 +154,27 @@ class Ui_Dialog(object):
 
         # # Def Connections        
         def yesClick():
-            # Assign I/p's in Dict
-            values={"Vcode": self.code.toPlainText(),
-                    "Vcap": self.capta.toPlainText()}
-            # Update Dict in Db
-            Db.update('page2',values)
-            #Fill in browser
-            rdata = browserob.fill_page2()
-            #Check for any error
-            if rdata['pass']:
-                browserob.getSnap('Final snap')
-                self.FP.setVesibality(True)
-            print("Rdata returned")
-            self.only_code.setVisible(rdata['OnlyV'])
-            self.only_cap.setVisible(rdata['OnlyC'])
-            self.both.setVisible(rdata['Both'])
-            self.Cshow.setPixmap(QtGui.QPixmap(browserob.get_capta()))
+            if len((self.code.toPlainText())) == 12 :
+                self.Vocde.setVisible(False)
+                # Assign I/p's in Dict
+                values={"Vcode": self.code.toPlainText(),
+                        "Vcap": self.capta.toPlainText()}
+                # Update Dict in Db
+                Db.update('page2',values)
+                #Fill in browser
+                rdata = browserob.fill_page2()
+                #Check for any error
+                if rdata['pass']:
+                    browserob.getSnap('Final snap')
+                    self.FP.setVesibality(True)
+                print("Rdata returned")
+                self.only_code.setVisible(rdata['OnlyV'])
+                self.only_cap.setVisible(rdata['OnlyC'])
+                self.both.setVisible(rdata['Both'])
+                self.Cshow.setPixmap(QtGui.QPixmap(browserob.get_capta()))
+            else:
+                if len((self.code.toPlainText())) > 0:
+                    self.Vocde.setVisible(True)
         
         # # Set Connections
         self.pushButton.clicked.connect(yesClick)

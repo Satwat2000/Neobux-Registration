@@ -49,7 +49,7 @@ class PyForm ( QDialog ):
         # pat.setColor()
         capLayout =  QHBoxLayout()
         capta = QLabel()
-        path = "img\capta.png"
+        path = "img/capta.png"))
         capta.setPixmap(QtGui.QPixmap(path))
         capLayout.addWidget(capta, alignment=QtCore.Qt.AlignHCenter)
         self.mainLayout.addLayout(capLayout)

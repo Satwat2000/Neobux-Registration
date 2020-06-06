@@ -11,6 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 now = datetime.datetime.now()       # year
 now = now.year
 
+
 class Ui_Dialog(object):
     def __init__(self):
         self.compFillup = False
@@ -38,10 +39,10 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.info1.setFont(font)
         self.info1.setObjectName("info1")
-        self.username = QtWidgets.QTextEdit(Dialog)
+        self.username = QtWidgets.QLineEdit(Dialog)
         self.username.setGeometry(QtCore.QRect(240, 160, 251, 31))
         self.username.setObjectName("username")
-        self.password = QtWidgets.QTextEdit(Dialog)
+        self.password = QtWidgets.QLineEdit(Dialog)
         self.password.setGeometry(QtCore.QRect(240, 230, 251, 31))
         self.password.setObjectName("password")
         self.Username = QtWidgets.QLabel(Dialog)
@@ -63,10 +64,10 @@ class Ui_Dialog(object):
         font.setWeight(50)
         self.pushButton.setFont(font)
         self.pushButton.setObjectName("pushButton")
-        self.enter_cap = QtWidgets.QTextEdit(Dialog)
+        self.enter_cap = QtWidgets.QLineEdit(Dialog)
         self.enter_cap.setGeometry(QtCore.QRect(240, 410, 111, 31))
         self.enter_cap.setObjectName("enter_cap")
-        self.dob = QtWidgets.QTextEdit(Dialog)
+        self.dob = QtWidgets.QLineEdit(Dialog)
         self.dob.setGeometry(QtCore.QRect(240, 360, 111, 31))
         self.dob.setObjectName("dob")
         self.DOB = QtWidgets.QLabel(Dialog)
@@ -81,7 +82,7 @@ class Ui_Dialog(object):
         self.Neo_icon.setText("")
         self.Neo_icon.setPixmap(QtGui.QPixmap("img/Neo_logo.png"))
         self.Neo_icon.setObjectName("Neo_icon")
-        self.email = QtWidgets.QTextEdit(Dialog)
+        self.email = QtWidgets.QLineEdit(Dialog)
         self.email.setGeometry(QtCore.QRect(240, 300, 251, 31))
         self.email.setObjectName("email")
         self.info2 = QtWidgets.QLabel(Dialog)
@@ -193,9 +194,9 @@ class Ui_Dialog(object):
         self.doberr.setVisible(False)
         # Password length Constrain
         def checkpass():
-            s = self.password.toPlainText()
+            s = self.password.text()
             n = len(s)
-            print(s,"-->",n)
+            #print(s,"-->",n)
             if n >= 8:
                 self.pass_err.setVisible(False)
             else:
@@ -203,7 +204,7 @@ class Ui_Dialog(object):
         # Email Constrain
         def checkmail():
             regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
-            if not re.search(regex,self.email.toPlainText()):
+            if not re.search(regex,self.email.text()):
                 print("email flag")
                 self.email_err.setVisible(True)
             else:
@@ -216,24 +217,26 @@ class Ui_Dialog(object):
        
         # DOB Constrain
         def doberr():
-            string = self.dob.toPlainText()
+            string = self.dob.text()
+            print(string)
             if len(string)>4:
                 print("DOB flag")
                 self.errdob = True
                 self.doberr.setVisible(True)
         
             else:
-                dif = now - int(string)
-                if dif < 10:
-                    self.errdob = True
-                    self.doberr.setVisible(True)
-                else:
-                    self.errdob = False
-                    self.doberr.setVisible(False)
+                if len(string) > 0:
+                    dif = now - int(string)
+                    if dif < 10:
+                        self.errdob = True
+                        self.doberr.setVisible(True)
+                    else:
+                        self.errdob = False
+                        self.doberr.setVisible(False)
         
         # Username Constrain
         def checkuser():
-            string = self.username.toPlainText()
+            string = self.username.text()
             if len(string) > 14:
                 print(string[:-1])
                 self.username.setText(string[:-1])
@@ -261,12 +264,13 @@ class Ui_Dialog(object):
                     # All constrains checked to proceed
                     print("sleep over")
                     values = {
-                        "user": self.username.toPlainText(),
-                        "pswd": self.password.toPlainText(),
-                        "mail": self.email.toPlainText(),
-                        "year": self.dob.toPlainText(),
-                        "code": self.enter_cap.toPlainText()
+                        "user": self.username.text(),
+                        "pswd": self.password.text(),
+                        "mail": self.email.text(),
+                        "year": self.dob.text(),
+                        "code": self.enter_cap.text()
                     }
+                    print (values)
                     Db.update('page1',values)
                     #fill info in browswe
                     rdata = browserob.fill_info()

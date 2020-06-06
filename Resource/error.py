@@ -11,6 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from process import support
 from os import path 
 
+   
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -36,7 +37,7 @@ class Ui_Dialog(object):
         self.url.setTextFormat(QtCore.Qt.AutoText)
         self.url.setObjectName("url")
         self.path = QtWidgets.QLabel(Dialog)
-        self.path.setGeometry(QtCore.QRect(60, 130, 331, 21))
+        self.path.setGeometry(QtCore.QRect(10, 130, 411, 21))
         font = QtGui.QFont()
         font.setFamily("MS Sans Serif")
         font.setBold(True)
@@ -59,6 +60,8 @@ class Ui_Dialog(object):
         self.line_2.setFrameShape(QtWidgets.QFrame.HLine)
         self.line_2.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_2.setObjectName("line_2")
+
+        self.buttonBox.clicked.connect(lambda:Dialog.close())
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
