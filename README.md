@@ -5,25 +5,18 @@
 ### Run this part first to Register into Neobux ** **else FATAL ERROR MAY OCCOUR !!! ** ** in the 2nd part.
 **Download Second part form https://github.com/Satwat2000/Neobux_Automation.git**
 
-## Steps for Pre-Execution setup: <br>
+## Steps for setup: <br>
  <br>
- 1. <br>
- - **Install Necessary module in your system:**
-   - Open Comand prompt ----> python -c "import sys; print(sys.executable)"
-      - GoTo the path provied from above--
-      - Open Lib --> site-pakages
-      - Extract the modules form the <module>.zip here
-    <br>**"or"** <br>
-      USE: 'pip install req.module'<br>
-      Required.Modules = { Selenium, Tkinter, PyQt5}     
+ 1. <h3> enviroment setup</h3> <br>
+ <h4> Python --Version 3.6.8 and above required</h4>
+ <p> Run setup.bat as Administrator </p>
      
- <br><br>
-  **ENJOY THE AUTOMATION** 
- <br><br>
+<br><br>
+ **ENJOY THE AUTOMATION** 
 <br><br> 
  
 <h2> If any Errors with webdrivers visit the site below--</h2>
-
+<br>
 Brouser Drivers:- <br>
     <p>>>Chrome:	https://sites.google.com/a/chromium.org/chromedriver/downloads</P>
     <P>>>Edge:	https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/</p>
