@@ -5,9 +5,7 @@
 ### Run this part first to Register into Neobux ** **else FATAL ERROR MAY OCCOUR !!! ** ** in the 2nd part.
 **Download Second part form https://github.com/Satwat2000/Neobux_Automation.git**
 
-## Steps for setup: <br>
- <br>
- 1. <h3> enviroment setup</h3> <br>
+## Enviroment setup <br>
  <h4> Python --Version 3.6.8 and above required</h4>
  <p> Run setup.bat as Administrator </p>
      
