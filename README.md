@@ -7,7 +7,7 @@
 
 ## Enviroment setup <br>
  <h4> Python --Version 3.6.8 and above required</h4>
- Run **setup.bat** as Administrator
+ Run setup.bat as Administrator
      
 <br><br>
  **ENJOY THE AUTOMATION** 
