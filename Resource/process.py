@@ -20,8 +20,10 @@ class func():
             options = webdriver.ChromeOptions()
             options.headless = True
             options.add_argument('--headless')
-            self.browser = webdriver.Chrome(executable_path=r'Chrome\chromedriver.exe', chrome_options=options)
-            self.browser.get("https://www.neobux.com/m/r/?vl=17FA6BC9D703CE65")
+            self.browser = webdriver.Chrome(executable_path=r'Chrome\chromedriver.exe')
+            self.browser.get("https://www.neobux.com/?r=uzumaki420")
+            btn = self.browser.find_element_by_class_name('vl1.nav.bld')
+            btn.click()
             return True
         except Exception as e:
             print(e)
@@ -36,7 +38,7 @@ class func():
     
     def getSnap(self,name):
         path = 'Resource/review/'+ name +'.png'
-        # #self.browser.get_screenshot_as_file(path)
+         #self.browser.get_screenshot_as_file(path)
 
     def pg1_err(self):
         print("into for check")

@@ -18,5 +18,6 @@ Echo.
 pip install selenium
 Echo.
 pip install PyQt5
+Echo. 
 Pause
 
