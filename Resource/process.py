@@ -44,8 +44,8 @@ class func():
         print("into for check")
         rdata={'pass':True,     # Limiter
                 'usr':False,    # Username error
-                'capt':False,
-                'mail':False}   # Capta error
+                'capt':False,   # Capta error
+                'mail':False}  
         try:
             element = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'ul')))
             print("-----Error found-----")
