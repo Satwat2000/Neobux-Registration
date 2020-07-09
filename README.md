@@ -1,7 +1,7 @@
 # Neobux-Registration
 ## A python program made for educationl purpose for better familiarity using Selenium.
 ### Automateion Register into Neobux. A soucre of free side income automated.
-### This is the 1st part of the whole Automation.
+# This is the 1st part of the whole Automation.
 ** ## Download Second(last) part form https://github.com/Satwat2000/Neobux_Automation.git ## **
 ### Run this part first to Register into Neobux ** **else FATAL ERROR MAY OCCOUR !!! ** ** in the 2nd part.
 
